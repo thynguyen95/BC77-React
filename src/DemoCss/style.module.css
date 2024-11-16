@@ -1,0 +1,8 @@
+.text {
+    color: green;
+    font-size: 30px;
+}
+
+.background {
+    @apply bg-red-300 text-2xl;
+}

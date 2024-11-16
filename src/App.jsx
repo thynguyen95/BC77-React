@@ -6,19 +6,39 @@ import Header from "./Components/Header";
 import Carousel from "./Components/Carousel";
 import BaiTap1 from "./BaiTap1/BaiTap1";
 import DataBinding from "./DataBinding/DataBinding";
+import Event from "./Event/Event";
+import RenderCondition from "./RenderCondition/RenderCondition";
+import DemoState from "./State/DemoState";
+import DemoChangeFontSize from "./State/DemoChangeFontSize";
+import ChangeColorCard from "./State/ChangeColorCard";
+import DemoCss from "./DemoCss/DemoCss";
 
 function App() {
-    const [count, setCount] = useState(0);
-
     return (
         <>
-            <h1 className="text-red-500 text-3xl">hello world</h1>
+            {/* <h1 className="text-red-500 text-3xl">hello world</h1> */}
             {/* cách sử dụng conponent  */}
             {/* <Header></Header> */}
             {/* <Header />
             <Carousel /> */}
             {/* <BaiTap1 /> */}
-            <DataBinding />
+            {/* <DataBinding /> */}
+
+            {/* <Event /> */}
+
+            {/* <RenderCondition /> */}
+
+            {/* <DemoState />
+
+            <p className="text-4xl text-green-500 mx-4" id="number">
+                10
+            </p> */}
+
+            {/* <DemoChangeFontSize /> */}
+
+            {/* <ChangeColorCard /> */}
+
+            <DemoCss />
         </>
     );
 }
