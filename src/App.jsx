@@ -12,6 +12,10 @@ import DemoState from "./State/DemoState";
 import DemoChangeFontSize from "./State/DemoChangeFontSize";
 import ChangeColorCard from "./State/ChangeColorCard";
 import DemoCss from "./DemoCss/DemoCss";
+import DemoProps from "./Props/DemoProps";
+import RenderWithMap from "./RenderWithMap/RenderWithMap";
+import ShoeShop from "./Props/BaiTap/ShoeShop";
+import LiftingStateUp from "./LiftingStateUp/LiftingStateUp";
 
 function App() {
     return (
@@ -38,7 +42,15 @@ function App() {
 
             {/* <ChangeColorCard /> */}
 
-            <DemoCss />
+            {/* <DemoCss /> */}
+
+            {/* <DemoProps /> */}
+
+            {/* <RenderWithMap /> */}
+
+            {/* <ShoeShop /> */}
+
+            <LiftingStateUp />
         </>
     );
 }
