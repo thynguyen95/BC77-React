@@ -16,6 +16,7 @@ import DemoProps from "./Props/DemoProps";
 import RenderWithMap from "./RenderWithMap/RenderWithMap";
 import ShoeShop from "./Props/BaiTap/ShoeShop";
 import LiftingStateUp from "./LiftingStateUp/LiftingStateUp";
+import ExCarStore from "./LiftingStateUp/ExCarStore/ExCarStore";
 
 function App() {
     return (
@@ -51,6 +52,8 @@ function App() {
             {/* <ShoeShop /> */}
 
             <LiftingStateUp />
+
+            {/* <ExCarStore /> */}
         </>
     );
 }

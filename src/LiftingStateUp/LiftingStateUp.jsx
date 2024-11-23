@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import Detail from "./Detail";
 import Card from "./Card";
+import Cart from "./Cart";
 
 const data = [
     {
@@ -55,6 +56,46 @@ const LiftingStateUp = () => {
         hinhAnh: "./img/imgPhone/vsphone.jpg",
     });
 
+    let [cart, setCart] = useState([]);
+
+    // state đặt ở đâu thì hàm xử lý setState sẽ ở đó
+    const addProductToCart = (product) => {
+        console.log("product: ", product);
+
+        // thêm soLuong cho sp
+        const productCart = { ...product, soLuong: 1 };
+
+        /*
+            Khi thêm sp vào giỏ hàng sẽ có 2 trường hợp :
+            + sp mới => thêm vào mảng 
+            + sp đã có trong giỏ hàng => tăng số lượng
+        */
+
+        const sp = cart.find((item) => item.maSP === productCart.maSP);
+
+        if (sp) {
+            // sp đã có trong giỏ hàng
+            sp.soLuong += 1;
+        } else {
+            // sp chưa có trong giỏ hàng
+            cart = [...cart, productCart];
+        }
+
+        const newCart = [...cart];
+
+        setCart(newCart);
+    };
+
+    const delProduct = (id) => {
+        console.log("id: ", id);
+
+        // xử lý xóa
+        const cartDel = [...cart.filter((item) => item.maSP !== id)];
+
+        // set state
+        setCart(cartDel);
+    };
+
     const renderCard = () => {
         return data.map((item) => {
             return (
@@ -62,6 +103,7 @@ const LiftingStateUp = () => {
                     key={item.maSP}
                     detail={item}
                     handleChangeState={setDetailProduct}
+                    addProductToCart={addProductToCart}
                 />
             );
         });
@@ -70,6 +112,8 @@ const LiftingStateUp = () => {
     return (
         <div className="container">
             <h1 className="title">Lifting State Up</h1>
+
+            <Cart cart={cart} delProduct={delProduct} />
 
             <h2 className="title2">Danh sách sản phẩm</h2>
 

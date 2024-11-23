@@ -1,12 +1,18 @@
+import { Button } from "flowbite-react";
 import React from "react";
 
 const Card = (props) => {
-    const { detail, handleChangeState } = props;
+    const { detail, handleChangeState, addProductToCart } = props;
 
     return (
         <div className="max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
             <a href="#">
-                <img className="rounded-t-lg" src={detail.hinhAnh} alt />
+                <img
+                    className="rounded-t-lg"
+                    src={detail.hinhAnh}
+                    alt
+                    width={200}
+                />
             </a>
             <div className="p-5">
                 <a href="#">
@@ -20,7 +26,8 @@ const Card = (props) => {
                 <a
                     href="#"
                     className="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
-                    onClick={() => {
+                    onClick={(e) => {
+                        e.preventDefault();
                         handleChangeState(detail);
                     }}
                 >
@@ -41,6 +48,15 @@ const Card = (props) => {
                         />
                     </svg>
                 </a>
+
+                <Button
+                    color="success"
+                    onClick={() => {
+                        addProductToCart(detail);
+                    }}
+                >
+                    Thêm vào giỏ hàng
+                </Button>
             </div>
         </div>
     );
