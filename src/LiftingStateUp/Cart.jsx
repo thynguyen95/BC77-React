@@ -3,7 +3,7 @@ import React from "react";
 import { Button, Table } from "flowbite-react";
 
 const Cart = (props) => {
-    const { cart, delProduct } = props;
+    const { cart, delProduct, updateQuality } = props;
 
     const renderProduct = () => {
         return cart.map((product) => {
@@ -21,9 +21,23 @@ const Cart = (props) => {
                     <Table.Cell>{product.tenSP}</Table.Cell>
                     <Table.Cell>
                         <div className="flex justify-center text-4xl">
-                            <Button color="blue">-</Button>
+                            <Button
+                                color="blue"
+                                onClick={() => {
+                                    updateQuality(product.maSP, -1);
+                                }}
+                            >
+                                -
+                            </Button>
                             <span className="mx-2">{product.soLuong}</span>
-                            <Button color="blue">+</Button>
+                            <Button
+                                color="blue"
+                                onClick={() => {
+                                    updateQuality(product.maSP, 1);
+                                }}
+                            >
+                                +
+                            </Button>
                         </div>
                     </Table.Cell>
                     <Table.Cell>{product.giaBan.toLocaleString()}</Table.Cell>
@@ -45,9 +59,48 @@ const Cart = (props) => {
         });
     };
 
+    const countProduct = () => {
+        // cách 1: dùng for
+        // let total = 0;
+        // for (let item of cart) {
+        //     // total = total + item.soLuong;
+        //     total += item.soLuong;
+        // }
+
+        // return total;
+
+        // cách 2: dùng reduce
+        const total = cart.reduce((totalProduct, item, index) => {
+            totalProduct += item.soLuong;
+
+            return totalProduct;
+        }, 0);
+
+        return total;
+    };
+
+    const calculatorTotalMoney = () => {
+        if (cart.length === 0) {
+            return 0;
+        } else {
+            const total = cart.reduce((total, item, index) => {
+                total += item.giaBan * item.soLuong;
+
+                return total;
+            }, 0);
+
+            return total.toLocaleString();
+        }
+    };
+
     return (
         <div className="container mb-10">
             <h1 className="title2">Danh sách giỏ hàng</h1>
+
+            <p className="text-2xl text-red-500">
+                Giỏ hàng: {cart.length} - số lượng: {countProduct()}
+            </p>
+            <p> Tổng tiền:{calculatorTotalMoney()}</p>
 
             <div className="overflow-x-auto">
                 <Table>

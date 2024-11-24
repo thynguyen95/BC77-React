@@ -17,6 +17,8 @@ import RenderWithMap from "./RenderWithMap/RenderWithMap";
 import ShoeShop from "./Props/BaiTap/ShoeShop";
 import LiftingStateUp from "./LiftingStateUp/LiftingStateUp";
 import ExCarStore from "./LiftingStateUp/ExCarStore/ExCarStore";
+import ShoeShopAPI from "./DemoAPI/ShoeShopAPI";
+import DemoLoginForm from "./DemoForm/DemoLoginForm";
 
 function App() {
     return (
@@ -51,9 +53,13 @@ function App() {
 
             {/* <ShoeShop /> */}
 
-            <LiftingStateUp />
+            {/* <LiftingStateUp /> */}
 
             {/* <ExCarStore /> */}
+
+            {/* <ShoeShopAPI /> */}
+
+            <DemoLoginForm />
         </>
     );
 }

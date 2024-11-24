@@ -96,6 +96,32 @@ const LiftingStateUp = () => {
         setCart(cartDel);
     };
 
+    const updateQuality = (id, quality) => {
+        console.log("id: ", id, quality);
+
+        // xử lý
+        // tìm ra sp cần tăng/giảm số lượng
+        const sp = cart.find((item) => item.maSP === id);
+
+        if (sp) {
+            sp.soLuong += quality;
+
+            if (sp.soLuong === 0) {
+                if (window.confirm("Bạn có muốn xóa sp này không?")) {
+                    delProduct(id);
+                } else {
+                    sp.soLuong = 1;
+                }
+
+                return;
+            }
+        }
+
+        // setState để render lại giao diện
+        let newCart = [...cart];
+        setCart(newCart);
+    };
+
     const renderCard = () => {
         return data.map((item) => {
             return (
@@ -113,7 +139,11 @@ const LiftingStateUp = () => {
         <div className="container">
             <h1 className="title">Lifting State Up</h1>
 
-            <Cart cart={cart} delProduct={delProduct} />
+            <Cart
+                cart={cart}
+                delProduct={delProduct}
+                updateQuality={updateQuality}
+            />
 
             <h2 className="title2">Danh sách sản phẩm</h2>
 
