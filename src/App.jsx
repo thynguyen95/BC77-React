@@ -19,48 +19,31 @@ import LiftingStateUp from "./LiftingStateUp/LiftingStateUp";
 import ExCarStore from "./LiftingStateUp/ExCarStore/ExCarStore";
 import ShoeShopAPI from "./DemoAPI/ShoeShopAPI";
 import DemoLoginForm from "./DemoForm/DemoLoginForm";
+import DemoFormik from "./DemoForm/DemoFormik";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+import Home from "./pages/Home";
+import About from "./pages/About";
+import Service from "./pages/Service";
+import HeaderRouter from "./Components/HeaderRouter";
+
+// client-side rendering:
+// server-side rendering: SEO tốt hơn
 
 function App() {
     return (
-        <>
-            {/* <h1 className="text-red-500 text-3xl">hello world</h1> */}
-            {/* cách sử dụng conponent  */}
-            {/* <Header></Header> */}
-            {/* <Header />
-            <Carousel /> */}
-            {/* <BaiTap1 /> */}
-            {/* <DataBinding /> */}
+        <BrowserRouter>
+            <HeaderRouter />
 
-            {/* <Event /> */}
+            <Routes>
+                {/* cài đặt khi để chạy ra trang chủ mặc định  */}
+                <Route path="" element={<Home />} />
+                <Route index element={<Home />} />
 
-            {/* <RenderCondition /> */}
-
-            {/* <DemoState />
-
-            <p className="text-4xl text-green-500 mx-4" id="number">
-                10
-            </p> */}
-
-            {/* <DemoChangeFontSize /> */}
-
-            {/* <ChangeColorCard /> */}
-
-            {/* <DemoCss /> */}
-
-            {/* <DemoProps /> */}
-
-            {/* <RenderWithMap /> */}
-
-            {/* <ShoeShop /> */}
-
-            {/* <LiftingStateUp /> */}
-
-            {/* <ExCarStore /> */}
-
-            {/* <ShoeShopAPI /> */}
-
-            <DemoLoginForm />
-        </>
+                <Route path="home" element={<Home />} />
+                <Route path="about" element={<About />} />
+                <Route path="service" element={<Service />} />
+            </Routes>
+        </BrowserRouter>
     );
 }
 

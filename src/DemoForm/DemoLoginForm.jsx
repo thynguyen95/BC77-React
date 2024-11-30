@@ -17,12 +17,40 @@ const DemoLoginForm = () => {
 
     const handleSubmit = (e) => {
         e.preventDefault(); //chặn sự kiện load lại trang của form
-        console.log("sumit");
 
         // không dùng cách này vì ko kiểm soát được
         // const userLogin = {
         //     email: document.querySelector('#email').value;
         // }
+
+        // chặn submit không hợp lệ
+
+        // error(email,password): chỉ cần 1 trường trong state error lỗi(có value) => data đầu vào không hợp lệ
+        // chạy vòng lặp để duyệt qua từng trường => kiểm tra xem trường đó có giá trị không
+        // 1. nếu có giá trị => data còn bị lỗi => không cho submit
+        // 2. nếu ko có giá trị => data đã hợp lệ => cho submit
+        for (let key in error) {
+            if (error[key] !== "") {
+                return;
+            }
+        }
+
+        // trường hợp bỏ qua 1 trường không muốn check
+        for (let key in userLogin) {
+            // userLogin[key] === "": email|password bằng rỗng
+            // key !== 'password': email
+            // =>
+
+            if (userLogin[key] === "" && key !== "password") {
+                console.log("test");
+
+                return;
+            }
+        }
+
+        // xử lý sumbit
+        console.log("sumit");
+        // gửi state cuối cùng đã hợp lệ lên API login
     };
 
     // const obj = {
@@ -32,11 +60,16 @@ const DemoLoginForm = () => {
 
     // obj.email || obj[email]
 
+    // style.backgroundColor
+
     const handleChangeInput = (e) => {
         console.log("e: ", e.target);
         const { name, value } = e.target;
         console.log("name: ", name);
         // console.log("value: ", value);
+
+        let attrType = e.target.getAttribute("data-type");
+        console.log("attrType: ", attrType);
 
         // name = email
         // if (name === 'email') {
@@ -47,6 +80,32 @@ const DemoLoginForm = () => {
         let messError = "";
         if (value === "") {
             messError = `${name} is required !`;
+        } else {
+            // xét lỗi nếu như đã nhập liệu => xét format
+
+            switch (attrType) {
+                case "email": {
+                    const regexEmail =
+                        /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+
+                    if (!regexEmail.test(value)) {
+                        messError = `${name} is invalid ! example: user@gmail.com`;
+                    }
+                    break;
+                }
+                case "password": {
+                    // check validation cho password
+                    const regexPassword =
+                        /^(?=.*[A-Z])(?=.*[!@#$%^&*()_+=[\]{};':"\\|,.<>?/~`-]).{6,12}$/;
+
+                    if (!regexPassword.test(value)) {
+                        messError = `${name} is invalid ! từ 6~12 ký tự, 1 kí tự hoa, 1 ký tự đặc biệt`;
+                    }
+                    break;
+                }
+                default:
+                    break;
+            }
         }
 
         setError({
@@ -77,9 +136,10 @@ const DemoLoginForm = () => {
                         </div>
                         <TextInput
                             id="email1"
-                            type="email"
+                            type="text"
                             name="email"
                             placeholder="name@flowbite.com"
+                            data-type="email"
                             // cách 1:
                             // onChange={(e) => {
                             //     // làm sao giữ được giá trị của field còn lại, chỉ update giá trị của field này
@@ -126,6 +186,7 @@ const DemoLoginForm = () => {
                             id="password1"
                             type="password"
                             name="password"
+                            data-type="password"
                             // cách 1:
                             // onChange={(e) => {
                             //     setUserLogin({
