@@ -41,7 +41,10 @@ const DetailProduct = () => {
                     <img
                         className="object-cover "
                         src={detail.image}
-                        style={{ transform: transform }}
+                        style={{
+                            transform: transform,
+                            transition: "0.3s linear",
+                        }}
                         alt
                     />
                     <div className="grid grid-cols-4 gap-3">

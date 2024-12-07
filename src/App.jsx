@@ -35,6 +35,11 @@ import MovieManagement from "./pages/MovieManagement";
 import Page404 from "./pages/Page404";
 import ForgotPass from "./pages/ForgotPass";
 import DetailProduct from "./pages/DetailProduct";
+import Search from "./pages/Search";
+import ProductManagement from "./pages/ProductManagement";
+import AddProduct from "./pages/ProductManagement/AddProduct";
+import EditProduct from "./pages/ProductManagement/EditProduct";
+import Product from "./pages/ProductManagement/Product";
 
 // client-side rendering:
 // server-side rendering: SEO tốt hơn
@@ -63,6 +68,7 @@ function App() {
                     <Route path="detail">
                         <Route path=":prodId" element={<DetailProduct />} />
                     </Route>
+                    <Route path="/search" element={<Search />} />
                 </Route>
 
                 {/* user */}
@@ -78,9 +84,20 @@ function App() {
 
                 {/* admin */}
                 <Route path="admin" element={<AdminMasterPage />}>
-                    <Route index element={<UserManagement />} />
+                    <Route index element={<ProductManagement />} />
                     <Route path="user" element={<UserManagement />} />
                     <Route path="movie" element={<MovieManagement />} />
+                    <Route
+                        path="product-management"
+                        element={<ProductManagement />}
+                    />
+                    <Route path="add-product" element={<AddProduct />} />
+                    <Route
+                        path="edit-product/:prodID"
+                        element={<EditProduct />}
+                    />
+                    <Route path="product" element={<Product />} />
+                    <Route path="product/:id" element={<Product />} />
                 </Route>
             </Routes>
         </BrowserRouter>

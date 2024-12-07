@@ -49,6 +49,26 @@ const HeaderRouter = () => {
                         login/register
                     </NavLink>
                 </li>
+                <li>
+                    <NavLink
+                        to="/search"
+                        className={(props) =>
+                            props.isActive ? "text-red-500" : "text-teal-500"
+                        }
+                    >
+                        search
+                    </NavLink>
+                </li>
+                <li>
+                    <NavLink
+                        to="/admin"
+                        className={(props) =>
+                            props.isActive ? "text-red-500" : "text-teal-500"
+                        }
+                    >
+                        admin
+                    </NavLink>
+                </li>
             </ul>
         </div>
     );
