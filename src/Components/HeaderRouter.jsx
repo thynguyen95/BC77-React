@@ -1,3 +1,4 @@
+import { Dropdown } from "flowbite-react";
 import React from "react";
 import { NavLink } from "react-router-dom";
 
@@ -67,6 +68,32 @@ const HeaderRouter = () => {
                         }
                     >
                         admin
+                    </NavLink>
+                </li>
+                <li>
+                    <Dropdown label="Redux" dismissOnClick={false}>
+                        <Dropdown.Item>
+                            <NavLink to={"/redux/change-number"}>
+                                Change Number
+                            </NavLink>
+                        </Dropdown.Item>
+                        <Dropdown.Item>
+                            <NavLink to={"/redux/change-fontsize"}>
+                                Change Fontsize
+                            </NavLink>
+                        </Dropdown.Item>
+                        <Dropdown.Item>Earnings</Dropdown.Item>
+                        <Dropdown.Item>Sign out</Dropdown.Item>
+                    </Dropdown>
+                </li>
+                <li>
+                    <NavLink
+                        to="/cart"
+                        className={(props) =>
+                            props.isActive ? "text-red-500" : "text-teal-500"
+                        }
+                    >
+                        cart(0)
                     </NavLink>
                 </li>
             </ul>

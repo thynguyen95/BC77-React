@@ -7,45 +7,82 @@ import { useMatch, useNavigate, useParams } from "react-router-dom";
 const Product = () => {
     const navigate = useNavigate();
     const match = useMatch("/admin/product/:id");
-    // nếu match có data là edit , nếu null là add
+    // nếu match có data({}) là edit , nếu null là add
     console.log("match: ", match);
 
-    // const frmEditProduct = useFormik({
-    //     initialValues: {
-    //         id: "",
-    //         name: "",
-    //         price: "",
-    //         img: "",
-    //         description: "",
-    //         type: "",
-    //         deleted: false,
-    //     },
-    //     onSubmit: (values) => {
-    //         console.log("values: ", values);
-    //         axios({
-    //             url: `https://apitraining.cybersoft.edu.vn/api/ProductApi/update/${values.id}`,
-    //             method: "PUT",
-    //             data: values,
-    //         })
-    //             .then((response) => {
-    //                 console.log("response: ", response);
-    //                 alert("bạn đã update thành công");
-    //                 navigate("../product-management");
-    //             })
-    //             .catch((err) => {
-    //                 console.log("err: ", err);
-    //             });
-    //     },
-    // });
+    const isEdit = !!match;
+
+    const getProductByID = () => {
+        axios({
+            url: `https://apitraining.cybersoft.edu.vn/api/ProductApi/get/${match.params.id}`,
+            method: "GET",
+        })
+            .then((response) => {
+                console.log("response: ", response);
+                // frmProduct.setFieldValue("id", response.data.id); // set từng field riêng
+                frmProduct.setValues(response.data);
+            })
+            .catch((err) => {
+                console.log("err: ", err);
+            });
+    };
+
+    useEffect(() => {
+        if (isEdit) {
+            getProductByID();
+        }
+    }, [isEdit]);
+
+    const frmProduct = useFormik({
+        initialValues: {
+            id: "",
+            name: "",
+            price: "",
+            img: "",
+            description: "",
+            type: "",
+            deleted: false,
+        },
+        onSubmit: (values) => {
+            console.log("values: ", values);
+
+            let url =
+                "https://apitraining.cybersoft.edu.vn/api/ProductApi/create";
+            let method = "POST";
+
+            if (isEdit) {
+                url = `https://apitraining.cybersoft.edu.vn/api/ProductApi/update/${values.id}`;
+                method = "PUT";
+            }
+
+            axios({
+                url: url,
+                method: method,
+                data: values,
+            })
+                .then((response) => {
+                    console.log("response: ", response);
+                    if (isEdit) {
+                        alert("bạn đã update thành công");
+                    } else {
+                        alert("bạn đã thêm thành công");
+                    }
+                    navigate("../product-management");
+                })
+                .catch((err) => {
+                    console.log("err: ", err);
+                });
+        },
+    });
 
     return (
         <div className="container">
-            <h1 className="title">Edit product</h1>
+            <h1 className="title">{isEdit ? "Edit product" : "Add product"}</h1>
 
-            {/* <div>
+            <div>
                 <form
                     className="flex max-w-md flex-col gap-4 mx-auto"
-                    onSubmit={frmEditProduct.handleSubmit}
+                    onSubmit={frmProduct.handleSubmit}
                 >
                     <div>
                         <div className="mb-2 block">
@@ -55,9 +92,9 @@ const Product = () => {
                             id="id1"
                             type="text"
                             name="id"
-                            disabled
-                            value={frmEditProduct.values.id}
-                            onChange={frmEditProduct.handleChange}
+                            disabled={isEdit}
+                            value={frmProduct.values.id}
+                            onChange={frmProduct.handleChange}
                         />
                     </div>
                     <div>
@@ -69,8 +106,8 @@ const Product = () => {
                             type="text"
                             name="name"
                             data-type="name"
-                            value={frmEditProduct.values.name}
-                            onChange={frmEditProduct.handleChange}
+                            value={frmProduct.values.name}
+                            onChange={frmProduct.handleChange}
                         />
                     </div>
                     <div>
@@ -82,8 +119,8 @@ const Product = () => {
                             type="text"
                             name="price"
                             data-type="price"
-                            value={frmEditProduct.values.price}
-                            onChange={frmEditProduct.handleChange}
+                            value={frmProduct.values.price}
+                            onChange={frmProduct.handleChange}
                         />
                     </div>
                     <div>
@@ -95,8 +132,8 @@ const Product = () => {
                             type="text"
                             name="img"
                             data-type="img"
-                            value={frmEditProduct.values.img}
-                            onChange={frmEditProduct.handleChange}
+                            value={frmProduct.values.img}
+                            onChange={frmProduct.handleChange}
                         />
                     </div>
                     <div>
@@ -111,8 +148,8 @@ const Product = () => {
                             type="text"
                             name="description"
                             data-type="description"
-                            value={frmEditProduct.values.description}
-                            onChange={frmEditProduct.handleChange}
+                            value={frmProduct.values.description}
+                            onChange={frmProduct.handleChange}
                         />
                     </div>
                     <div>
@@ -122,8 +159,8 @@ const Product = () => {
                         <Select
                             id="type"
                             name="type"
-                            onChange={frmEditProduct.handleChange}
-                            value={frmEditProduct.values.type}
+                            onChange={frmProduct.handleChange}
+                            value={frmProduct.values.type}
                             required
                         >
                             <option value={"SAMSUNG"}>SAMSUNG</option>
@@ -132,9 +169,9 @@ const Product = () => {
                             <option value={"XIAOMI"}>XIAOMI</option>
                         </Select>
                     </div>
-                    <Button type="submit">Submit</Button>
+                    <Button type="submit">{isEdit ? "Update" : "Add"}</Button>
                 </form>
-            </div> */}
+            </div>
         </div>
     );
 };

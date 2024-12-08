@@ -20,7 +20,13 @@ import ExCarStore from "./LiftingStateUp/ExCarStore/ExCarStore";
 import ShoeShopAPI from "./DemoAPI/ShoeShopAPI";
 import DemoLoginForm from "./DemoForm/DemoLoginForm";
 import DemoFormik from "./DemoForm/DemoFormik";
-import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
+import {
+    BrowserRouter,
+    Navigate,
+    Outlet,
+    Route,
+    Routes,
+} from "react-router-dom";
 import Home from "./pages/Home";
 import About from "./pages/About";
 import Service from "./pages/Service";
@@ -40,67 +46,94 @@ import ProductManagement from "./pages/ProductManagement";
 import AddProduct from "./pages/ProductManagement/AddProduct";
 import EditProduct from "./pages/ProductManagement/EditProduct";
 import Product from "./pages/ProductManagement/Product";
+import ChangNumberRedux from "./pages/DemoRedux/ChangNumberRedux";
+import { Provider } from "react-redux";
+import { store } from "./redux/store";
+import ChangeFontSizeRedux from "./pages/DemoRedux/ChangeFontSizeRedux";
+import Cart from "./pages/Cart";
 
 // client-side rendering:
 // server-side rendering: SEO tốt hơn
 
 function App() {
     return (
-        <BrowserRouter>
-            {/* <HeaderRouter /> */}
+        <Provider store={store}>
+            <BrowserRouter>
+                {/* <HeaderRouter /> */}
 
-            <Routes>
-                {/* route basic */}
-                {/* cài đặt khi để chạy ra trang chủ mặc định  */}
-                {/* <Route path="" element={<Home />} />
+                <Routes>
+                    {/* route basic */}
+                    {/* cài đặt khi để chạy ra trang chủ mặc định  */}
+                    {/* <Route path="" element={<Home />} />
                 <Route index element={<Home />} />
 
                 <Route path="home" element={<Home />} />
                 <Route path="about" element={<About />} /> */}
-                <Route path="service" element={<Service />} />
+                    <Route path="service" element={<Service />} />
 
-                {/* nested router  */}
-                <Route path="/" element={<HomeMasterPage />}>
-                    <Route index element={<Home />} />
-                    <Route path="home" element={<Home />} />
-                    <Route path="about" element={<About />} />
-                    <Route path="*" element={<Page404 />} />
-                    <Route path="detail">
-                        <Route path=":prodId" element={<DetailProduct />} />
+                    {/* nested router  */}
+                    <Route path="/" element={<HomeMasterPage />}>
+                        <Route index element={<Home />} />
+                        <Route path="home" element={<Home />} />
+                        <Route path="about" element={<About />} />
+                        <Route path="cart" element={<Cart />} />
+                        <Route path="*" element={<Page404 />} />
+                        <Route path="detail">
+                            <Route path=":prodId" element={<DetailProduct />} />
+                        </Route>
+                        <Route path="/search" element={<Search />} />
+
+                        <Route
+                            path="redux"
+                            element={
+                                <>
+                                    <h1 className="title">Demo Redux</h1>
+                                    <Outlet />
+                                </>
+                            }
+                        >
+                            <Route
+                                path="change-number"
+                                element={<ChangNumberRedux />}
+                            />
+                            <Route
+                                path="change-fontsize"
+                                element={<ChangeFontSizeRedux />}
+                            />
+                        </Route>
                     </Route>
-                    <Route path="/search" element={<Search />} />
-                </Route>
 
-                {/* user */}
-                <Route path="user" element={<UserMasterPage />}>
-                    <Route path="login" element={<Login />} />
-                    <Route path="register" element={<Register />} />
-                    <Route path="forgot-pass" element={<ForgotPass />} />
+                    {/* user */}
+                    <Route path="user" element={<UserMasterPage />}>
+                        <Route path="login" element={<Login />} />
+                        <Route path="register" element={<Register />} />
+                        <Route path="forgot-pass" element={<ForgotPass />} />
 
-                    {/* <Route path="*" element={<Page404 />} /> */}
-                    {/* navigate: chuyển hướng tự động */}
-                    <Route path="*" element={<Navigate to={"/user"} />} />
-                </Route>
+                        {/* <Route path="*" element={<Page404 />} /> */}
+                        {/* navigate: chuyển hướng tự động */}
+                        <Route path="*" element={<Navigate to={"/user"} />} />
+                    </Route>
 
-                {/* admin */}
-                <Route path="admin" element={<AdminMasterPage />}>
-                    <Route index element={<ProductManagement />} />
-                    <Route path="user" element={<UserManagement />} />
-                    <Route path="movie" element={<MovieManagement />} />
-                    <Route
-                        path="product-management"
-                        element={<ProductManagement />}
-                    />
-                    <Route path="add-product" element={<AddProduct />} />
-                    <Route
-                        path="edit-product/:prodID"
-                        element={<EditProduct />}
-                    />
-                    <Route path="product" element={<Product />} />
-                    <Route path="product/:id" element={<Product />} />
-                </Route>
-            </Routes>
-        </BrowserRouter>
+                    {/* admin */}
+                    <Route path="admin" element={<AdminMasterPage />}>
+                        <Route index element={<ProductManagement />} />
+                        <Route path="user" element={<UserManagement />} />
+                        <Route path="movie" element={<MovieManagement />} />
+                        <Route
+                            path="product-management"
+                            element={<ProductManagement />}
+                        />
+                        <Route path="add-product" element={<AddProduct />} />
+                        <Route
+                            path="edit-product/:prodID"
+                            element={<EditProduct />}
+                        />
+                        <Route path="product" element={<Product />} />
+                        <Route path="product/:id" element={<Product />} />
+                    </Route>
+                </Routes>
+            </BrowserRouter>
+        </Provider>
     );
 }
 
