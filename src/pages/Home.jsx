@@ -3,6 +3,7 @@ import { Button } from "flowbite-react";
 import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { NavLink } from "react-router-dom";
+import { addProductAction } from "../redux/reducer/cartReducer";
 
 const Home = () => {
     const [arrProduct, setArrProduct] = useState([]);
@@ -62,16 +63,37 @@ const Home = () => {
                                     </NavLink>
                                     <Button
                                         onClick={() => {
+                                            // cách 1.
                                             // tạo action chứa dữ liệu để đưa lên store
-                                            const action = {
-                                                type: "ADD_PRODUCT",
-                                                payload: {
-                                                    ...item,
-                                                    quantityCart: 1,
-                                                },
-                                            };
+                                            // const action = {
+                                            //     type: "ADD_PRODUCT",
+                                            //     payload: {
+                                            //         ...item,
+                                            //         quantityCart: 1,
+                                            //     },
+                                            // };
 
-                                            // đưa action lên store
+                                            // // đưa action lên store
+                                            // dispatch(action);
+
+                                            // cách 2: sử dụng redux slice
+                                            // 2.1 tạo action slice thủ công
+                                            // const action = {
+                                            //     // type: tenReducer/tenMethod
+                                            //     type: "cartReducer/addProductAction",
+                                            //     payload: {
+                                            //         ...item,
+                                            //         quantityCart: 1,
+                                            //     },
+                                            // };
+
+                                            // 2.2 tạo action slice bằng hàm export
+                                            const payload = {
+                                                ...item,
+                                                quantityCart: 1,
+                                            };
+                                            const action =
+                                                addProductAction(payload);
                                             dispatch(action);
                                         }}
                                     >

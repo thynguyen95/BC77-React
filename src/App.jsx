@@ -51,6 +51,7 @@ import { Provider } from "react-redux";
 import { store } from "./redux/store";
 import ChangeFontSizeRedux from "./pages/DemoRedux/ChangeFontSizeRedux";
 import Cart from "./pages/Cart";
+import Profile from "./pages/Profile";
 
 // client-side rendering:
 // server-side rendering: SEO tốt hơn
@@ -105,8 +106,10 @@ function App() {
 
                     {/* user */}
                     <Route path="user" element={<UserMasterPage />}>
+                        <Route index element={<Login />} />
                         <Route path="login" element={<Login />} />
                         <Route path="register" element={<Register />} />
+                        <Route path="profile" element={<Profile />} />
                         <Route path="forgot-pass" element={<ForgotPass />} />
 
                         {/* <Route path="*" element={<Page404 />} /> */}

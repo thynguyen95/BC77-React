@@ -1,8 +1,11 @@
 import { Dropdown } from "flowbite-react";
 import React from "react";
+import { useSelector } from "react-redux";
 import { NavLink } from "react-router-dom";
 
 const HeaderRouter = () => {
+    const cartStore = useSelector((state) => state.cartSliceReducer.cart);
+
     return (
         <div>
             <ul className="flex justify-center bg-blue-300 p-4 gap-5">
@@ -93,7 +96,13 @@ const HeaderRouter = () => {
                             props.isActive ? "text-red-500" : "text-teal-500"
                         }
                     >
-                        cart(0)
+                        {/* cart({cartStore.length}) */}
+                        cart(
+                        {cartStore.reduce(
+                            (total, item) => total + item.quantityCart,
+                            0
+                        )}
+                        )
                     </NavLink>
                 </li>
             </ul>

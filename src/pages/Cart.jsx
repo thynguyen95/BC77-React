@@ -1,9 +1,20 @@
 import { Button } from "flowbite-react";
 import React from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import {
+    changeQuantityAction,
+    deleteProductAction,
+} from "../redux/reducer/cartReducer";
 
 const Cart = () => {
-    const cartStore = useSelector((state) => state.cartReducer);
+    // redux thủ công
+    // const cartStore = useSelector((state) => state.cartReducer);
+
+    // redux toolkit
+    const cartStore = useSelector((state) => state.cartSliceReducer.cart);
+    console.log("cartStore: ", cartStore);
+
+    const dispatch = useDispatch();
 
     return (
         <div className="container">
@@ -39,7 +50,10 @@ const Cart = () => {
                     <tbody>
                         {cartStore?.map((item) => {
                             return (
-                                <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+                                <tr
+                                    key={item.id}
+                                    className="bg-white border-b dark:bg-gray-800 dark:border-gray-700"
+                                >
                                     <th
                                         scope="row"
                                         className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
@@ -56,13 +70,59 @@ const Cart = () => {
                                     </td>
                                     <td className="px-6 py-4">{item.price}</td>
                                     <td className="px-6 py-4">
-                                        {item.quantityCart}
+                                        <div className="flex items-center">
+                                            <Button
+                                                onClick={() => {
+                                                    // tạo action
+                                                    const action =
+                                                        changeQuantityAction({
+                                                            id: item.id,
+                                                            quantityCart: -1,
+                                                        });
+                                                    dispatch(action);
+                                                }}
+                                            >
+                                                -
+                                            </Button>
+                                            <span className="text-red-500 mx-3 text-2xl">
+                                                {" "}
+                                                {item.quantityCart}
+                                            </span>
+                                            <Button
+                                                onClick={() => {
+                                                    // tạo action
+                                                    const action =
+                                                        changeQuantityAction({
+                                                            id: item.id,
+                                                            quantityCart: 1,
+                                                        });
+                                                    dispatch(action);
+                                                }}
+                                            >
+                                                +
+                                            </Button>
+                                        </div>
                                     </td>
                                     <td className="px-6 py-4">
-                                        {item.price * item.quantity}
+                                        {item.price * item.quantityCart}
                                     </td>
                                     <td className="px-6 py-4">
-                                        <Button color="failure">Delete</Button>
+                                        <Button
+                                            color="failure"
+                                            onClick={() => {
+                                                // xử lý logic
+                                                // tạo action
+                                                const action =
+                                                    deleteProductAction(
+                                                        item.id
+                                                    );
+
+                                                // dispatch action lên reducer
+                                                dispatch(action);
+                                            }}
+                                        >
+                                            Delete
+                                        </Button>
                                     </td>
                                 </tr>
                             );

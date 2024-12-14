@@ -1,3 +1,4 @@
+import axios from "axios";
 import { Button, Label, TextInput } from "flowbite-react";
 import { useFormik } from "formik";
 import React from "react";
@@ -13,20 +14,36 @@ const Login = () => {
         },
         onSubmit: (values) => {
             console.log("values: ", values);
-            if (
-                values.email === "cybersoft" &&
-                values.password === "cybersoft"
-            ) {
-                // nếu login thành công => chuyển user về trang home
+            // if (
+            //     values.email === "cybersoft" &&
+            //     values.password === "cybersoft"
+            // ) {
+            //     // nếu login thành công => chuyển user về trang home
 
-                navigate("/home");
-            } else {
-                // nếu login thất bại chuyển về forgot pass
+            //     navigate("/home");
+            // } else {
+            //     // nếu login thất bại chuyển về forgot pass
 
-                // navigate("../forgot-pass");
+            //     // navigate("../forgot-pass");
 
-                navigate("../forgot-pass", { replace: true });
-            }
+            //     navigate("../forgot-pass", { replace: true });
+            // }
+
+            // call api login để lấy token lưu vào máy client
+            axios({
+                url: "https://apistore.cybersoft.edu.vn/api/Users/signin",
+                method: "POST",
+                data: values,
+            })
+                .then((res) => {
+                    console.log("res: ", res);
+
+                    const token = res.data.content.accessToken;
+                    localStorage.setItem("accessToken", token);
+                })
+                .catch((err) => {
+                    console.log("err: ", err);
+                });
         },
     });
 
