@@ -3,6 +3,8 @@ import { numberReducer } from "./reducer/numberReducer";
 import { fontSizeReducer } from "./reducer/fontSizeReducer";
 import cartReducer from "./reducer/cartReducer";
 import userReducer from "./reducer/userReducer";
+import spinnerReducer from "./reducer/spinnerReducer";
+import productReducer from "./reducer/productReducer";
 
 const cartDefault = [
     {
@@ -79,6 +81,8 @@ export const store = configureStore({
         },
         cartSliceReducer: cartReducer,
         userReducer: userReducer,
+        spinnerReducer,
+        productReducer,
         // AReducer: (state = "A") => {
         //     return state;
         // },

@@ -52,14 +52,21 @@ import { store } from "./redux/store";
 import ChangeFontSizeRedux from "./pages/DemoRedux/ChangeFontSizeRedux";
 import Cart from "./pages/Cart";
 import Profile from "./pages/Profile";
+import { unstable_HistoryRouter as HistoryRouter } from "react-router-dom";
+import { navigateHistory } from "./services/configUrl";
+import Spinner from "./Components/Spinner";
 
 // client-side rendering:
 // server-side rendering: SEO tốt hơn
 
+// cấu hình customBrowserHistory
+
 function App() {
     return (
         <Provider store={store}>
-            <BrowserRouter>
+            <Spinner />
+
+            <HistoryRouter history={navigateHistory}>
                 {/* <HeaderRouter /> */}
 
                 <Routes>
@@ -135,7 +142,7 @@ function App() {
                         <Route path="product/:id" element={<Product />} />
                     </Route>
                 </Routes>
-            </BrowserRouter>
+            </HistoryRouter>
         </Provider>
     );
 }

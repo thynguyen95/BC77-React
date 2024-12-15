@@ -1,34 +1,67 @@
 import axios from "axios";
 import { Button } from "flowbite-react";
 import React, { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { NavLink } from "react-router-dom";
 import { addProductAction } from "../redux/reducer/cartReducer";
+import Spinner from "../Components/Spinner";
+import { http } from "../services/configUrl";
+import { getProductApiActionThunk } from "../redux/reducer/productReducer";
 
 const Home = () => {
-    const [arrProduct, setArrProduct] = useState([]);
+    // const [arrProduct, setArrProduct] = useState([]);
+    const { arrProduct } = useSelector((state) => state.productReducer);
+    // const [isLoading, setIsLoading] = useState(true);
     const dispatch = useDispatch();
 
     const getAllProduct = () => {
-        axios({
-            url: "https://apistore.cybersoft.edu.vn/api/Product",
-            method: "GET",
-        })
-            .then((res) => {
-                console.log("res: ", res.data.content);
-                setArrProduct(res.data.content);
-            })
-            .catch((err) => {
-                console.log("err: ", err);
-            });
+        // axios({
+        //     url: "https://apistore.cybersoft.edu.vn/api/Product",
+        //     method: "GET",
+        // })
+        //     .then((res) => {
+        //         console.log("res: ", res.data.content);
+        //         setArrProduct(res.data.content);
+        //         // tắt loading khi lấy được data
+        //         // setIsLoading(false);
+        //     })
+        //     .catch((err) => {
+        //         console.log("err: ", err);
+        //     });
+        // http.get("/api/Product")
+        //     .then((res) => {
+        //         console.log("res: ", res.data.content);
+        //         setArrProduct(res.data.content);
+        //         // tắt loading khi lấy được data
+        //         // setIsLoading(false);
+        //     })
+        //     .catch((err) => {
+        //         console.log("err: ", err);
+        //     });
+        /*
+            actionPayload: { type, action}
+            actionThunk: (dispatch) => {
+                tự định nghĩa nội dung để có dữ liệu dispatch lần 2 lên store
+            }
+        */
+
+        // dispatch((dispatch) => {
+        //     // xử lý logic : call api
+        //     dispatch(); // lần dispatch thứ 2
+        // });
+        const actionThunk = getProductApiActionThunk();
+        dispatch(actionThunk);
     };
 
     useEffect(() => {
+        // setIsLoading(true);
+
         getAllProduct();
     }, []);
 
     return (
         <div className="container">
+            {/* {isLoading ? <Spinner /> : ""} */}
             <h1 className="title">Danh sách sản phẩm </h1>
 
             <div className="grid grid-cols-3 gap-5">

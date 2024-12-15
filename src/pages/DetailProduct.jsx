@@ -1,10 +1,14 @@
 import axios from "axios";
 import { Button } from "flowbite-react";
 import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { NavLink, useParams } from "react-router-dom";
+import { getProductDetailByIdActionThunk } from "../redux/reducer/productReducer";
 
 const DetailProduct = () => {
-    const [detail, setDetail] = useState({});
+    // const [detail, setDetail] = useState({});
+    const { detail } = useSelector((state) => state.productReducer);
+    const dispatch = useDispatch();
     const [transform, setTransform] = useState("rotate(0deg)");
 
     // global state: bất kì cpn nào cũng có thể lấy được
@@ -13,18 +17,21 @@ const DetailProduct = () => {
     console.log("param: ", param);
 
     const getProductByID = () => {
-        axios({
-            url: `https://apistore.cybersoft.edu.vn/api/Product/getbyid?id=${param.prodId}`,
-            method: "GET",
-        })
-            .then((response) => {
-                console.log("response: ", response.data.content);
+        // axios({
+        //     url: `https://apistore.cybersoft.edu.vn/api/Product/getbyid?id=${param.prodId}`,
+        //     method: "GET",
+        // })
+        //     .then((response) => {
+        //         console.log("response: ", response.data.content);
+        //         setDetail(response.data.content);
+        //     })
+        //     .catch((error) => {
+        //         console.log("error: ", error);
+        //     });
 
-                setDetail(response.data.content);
-            })
-            .catch((error) => {
-                console.log("error: ", error);
-            });
+        // tạo actionThunk (là 1 hàm có tham số là dispatch)
+        const actionThunk = getProductDetailByIdActionThunk(param.prodId);
+        dispatch(actionThunk);
     };
 
     useEffect(() => {
