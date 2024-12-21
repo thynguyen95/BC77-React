@@ -6,14 +6,10 @@ import {
     enableLoadingAction,
     hanldeLoadingAction,
 } from "../redux/reducer/spinnerReducer";
+import { DOMAIN, TOKEN, TOKEN_CYBERSOFT } from "./constant";
 
 // cấu hình chuyển hướng trang khi không dùng hook
 export const navigateHistory = createBrowserHistory();
-
-const DOMAIN = "https://apistore.cybersoft.edu.vn";
-const TOKEN_CYBERSOFT =
-    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0ZW5Mb3AiOiJCb290Y2FtcCA3NyIsIkhldEhhblN0cmluZyI6IjA1LzA2LzIwMjUiLCJIZXRIYW5UaW1lIjoiMTc0OTA4MTYwMDAwMCIsIm5iZiI6MTcyMzIyMjgwMCwiZXhwIjoxNzQ5MjI5MjAwfQ.5EInOZxm36n_2HNZsS3kKMLXRYhND8W2KycBygtOP8I";
-export const MA_NHOM = "GP01";
 
 export const http = axios.create({
     baseURL: DOMAIN,
@@ -23,11 +19,28 @@ export const http = axios.create({
 // cấu hình cho request: khi call api
 http.interceptors.request.use((request) => {
     // bật loading
-    store.dispatch(hanldeLoadingAction(true));
+    // không bật loading ở 1 vài trường hợp không cần thiết
+    // cách 1:
+    // if (!request.url.includes("signin")) {
+    //     store.dispatch(hanldeLoadingAction(true));
+    // }
+
+    // cách 2: tùy chỉnh cấu hình cho từng request
+    // skipLoading: tự đặt, truyền param này ở nơi call api ko cần bật loading
+    if (!request.skipLoading) {
+        console.log("skip loading");
+
+        store.dispatch(hanldeLoadingAction(true));
+    }
+    // if (request.isAdmin) {
+    //     bật loading của admin
+    // } else {
+    //     bật loading của user
+    // }
 
     request.headers = {
         ...request.headers, //giữ lại các api có header riêng
-        Authorization: localStorage.getItem("accessToken"), // thêm phần chung
+        Authorization: localStorage.getItem(TOKEN), // thêm phần chung
         TokenCybersoft: TOKEN_CYBERSOFT,
     };
 

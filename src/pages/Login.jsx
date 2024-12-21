@@ -3,9 +3,12 @@ import { Button, Label, TextInput } from "flowbite-react";
 import { useFormik } from "formik";
 import React from "react";
 import { useNavigate } from "react-router-dom";
+import { loginActionAsync } from "../redux/actions/userActions";
+import { useDispatch } from "react-redux";
 
 const Login = () => {
     const navigate = useNavigate();
+    const dispatch = useDispatch();
 
     const frmLogin = useFormik({
         initialValues: {
@@ -30,20 +33,24 @@ const Login = () => {
             // }
 
             // call api login để lấy token lưu vào máy client
-            axios({
-                url: "https://apistore.cybersoft.edu.vn/api/Users/signin",
-                method: "POST",
-                data: values,
-            })
-                .then((res) => {
-                    console.log("res: ", res);
+            // axios({
+            //     url: "https://apistore.cybersoft.edu.vn/api/Users/signin",
+            //     method: "POST",
+            //     data: values,
+            // })
+            //     .then((res) => {
+            //         console.log("res: ", res);
 
-                    const token = res.data.content.accessToken;
-                    localStorage.setItem("accessToken", token);
-                })
-                .catch((err) => {
-                    console.log("err: ", err);
-                });
+            //         const token = res.data.content.accessToken;
+            //         localStorage.setItem("accessToken", token);
+            //     })
+            //     .catch((err) => {
+            //         console.log("err: ", err);
+            //     });
+
+            // dùng actionAsync
+            const actionAsync = loginActionAsync(values);
+            dispatch(actionAsync);
         },
     });
 

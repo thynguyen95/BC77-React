@@ -26,6 +26,12 @@ export default productReducer.reducer;
 
 // ---------------------- action thunk ------------------
 // closure function
+
+// const fnName = (dispatch) => {
+//     dispatch
+// }
+//call: fnName(id)
+
 export const getProductApiActionThunk = () => {
     return (dispatch) => {
         http.get("/api/Product")

@@ -1,5 +1,6 @@
 import React from "react";
 import { Outlet } from "react-router-dom";
+import HeaderRouter from "../Components/HeaderRouter";
 
 const UserMasterPage = () => {
     return (
@@ -10,6 +11,7 @@ const UserMasterPage = () => {
                 backgroundSize: "cover",
             }}
         >
+            <HeaderRouter />
             <div className="h-full flex items-center justify-center bg-black bg-opacity-15">
                 <Outlet />
             </div>

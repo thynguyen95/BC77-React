@@ -5,6 +5,34 @@ import { NavLink } from "react-router-dom";
 
 const HeaderRouter = () => {
     const cartStore = useSelector((state) => state.cartSliceReducer.cart);
+    const { userLogin } = useSelector((state) => state.userReducer);
+
+    const renderLogin = () => {
+        // falsy, truthy
+        if (userLogin) {
+            return (
+                <NavLink
+                    to="/user/profile"
+                    className={(props) =>
+                        props.isActive ? "text-red-500" : "text-teal-500"
+                    }
+                >
+                    Hello {userLogin.email}
+                </NavLink>
+            );
+        }
+
+        return (
+            <NavLink
+                to="/user"
+                className={(props) =>
+                    props.isActive ? "text-red-500" : "text-teal-500"
+                }
+            >
+                login/register
+            </NavLink>
+        );
+    };
 
     return (
         <div>
@@ -41,16 +69,6 @@ const HeaderRouter = () => {
                         }
                     >
                         Service
-                    </NavLink>
-                </li>
-                <li>
-                    <NavLink
-                        to="/user"
-                        className={(props) =>
-                            props.isActive ? "text-red-500" : "text-teal-500"
-                        }
-                    >
-                        login/register
                     </NavLink>
                 </li>
                 <li>
@@ -105,6 +123,17 @@ const HeaderRouter = () => {
                         )
                     </NavLink>
                 </li>
+                <li>
+                    <NavLink
+                        to="/react-query"
+                        className={(props) =>
+                            props.isActive ? "text-red-500" : "text-teal-500"
+                        }
+                    >
+                        react query
+                    </NavLink>
+                </li>
+                <li>{renderLogin()}</li>
             </ul>
         </div>
     );
