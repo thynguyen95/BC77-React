@@ -66,6 +66,11 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import RQMasterPage from "./MasterPage/RQMasterPage";
 import ShoeShopRQ from "./ReactQueryDemo/ShoeShopRQ";
+import UserManagementRQ from "./ReactQueryDemo/UserManagementRQ";
+import HookMasterPage from "./MasterPage/HookMasterPage";
+import UseRefDemo from "./pages/HookToiUuRender/useRefDemo";
+import UseMemoDemo from "./pages/HookToiUuRender/UseMemoDemo";
+import UseCallBackDemo from "./pages/HookToiUuRender/UseCallBackDemo";
 // tương tự store của redux
 const queryClient = new QueryClient();
 
@@ -167,6 +172,19 @@ function App() {
 
                         <Route path="react-query" element={<RQMasterPage />}>
                             <Route path="use-query" element={<ShoeShopRQ />} />
+                            <Route
+                                path="use-mutation"
+                                element={<UserManagementRQ />}
+                            />
+                        </Route>
+
+                        <Route path="hook" element={<HookMasterPage />}>
+                            <Route path="useRef" element={<UseRefDemo />} />
+                            <Route path="useMemo" element={<UseMemoDemo />} />
+                            <Route
+                                path="useCallback"
+                                element={<UseCallBackDemo />}
+                            />
                         </Route>
                     </Routes>
                 </HistoryRouter>

@@ -21,6 +21,20 @@ const HeaderRQ = () => {
                         useQuery
                     </NavLink>
                 </li>
+                <li>
+                    <NavLink
+                        to={"./use-mutation"}
+                        className={(props) =>
+                            props.isActive ? "text-red-500" : "text-teal-500"
+                        }
+                        style={({ isActive }) =>
+                            // const {isActive} = props;
+                            isActive ? { color: "red" } : { color: "yellow" }
+                        }
+                    >
+                        useMutation & useQueryClient
+                    </NavLink>
+                </li>
             </ul>
         </div>
     );
