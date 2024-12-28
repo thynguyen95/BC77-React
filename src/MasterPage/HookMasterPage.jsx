@@ -61,6 +61,42 @@ const HookMasterPage = () => {
                             useCallback
                         </NavLink>
                     </li>
+                    <li>
+                        <NavLink
+                            to={"./ch-getDataAPI"}
+                            className={(props) =>
+                                props.isActive
+                                    ? "text-red-500"
+                                    : "text-teal-500"
+                            }
+                            style={({ isActive }) =>
+                                // const {isActive} = props;
+                                isActive
+                                    ? { color: "red" }
+                                    : { color: "yellow" }
+                            }
+                        >
+                            ch-getDataAPI
+                        </NavLink>
+                    </li>
+                    <li>
+                        <NavLink
+                            to={"./container-cpn"}
+                            className={(props) =>
+                                props.isActive
+                                    ? "text-red-500"
+                                    : "text-teal-500"
+                            }
+                            style={({ isActive }) =>
+                                // const {isActive} = props;
+                                isActive
+                                    ? { color: "red" }
+                                    : { color: "yellow" }
+                            }
+                        >
+                            container-cpn
+                        </NavLink>
+                    </li>
                 </ul>
             </div>
 

@@ -71,6 +71,8 @@ import HookMasterPage from "./MasterPage/HookMasterPage";
 import UseRefDemo from "./pages/HookToiUuRender/useRefDemo";
 import UseMemoDemo from "./pages/HookToiUuRender/UseMemoDemo";
 import UseCallBackDemo from "./pages/HookToiUuRender/UseCallBackDemo";
+import DemoCustomHook from "./pages/DemoCustomHook/DemoCustomHook";
+import DemoContainerComponent from "./pages/DemoContainerComponent/DemoContainerComponent";
 // tương tự store của redux
 const queryClient = new QueryClient();
 
@@ -184,6 +186,14 @@ function App() {
                             <Route
                                 path="useCallback"
                                 element={<UseCallBackDemo />}
+                            />
+                            <Route
+                                path="ch-getDataAPI"
+                                element={<DemoCustomHook />}
+                            />
+                            <Route
+                                path="container-cpn"
+                                element={<DemoContainerComponent />}
                             />
                         </Route>
                     </Routes>
